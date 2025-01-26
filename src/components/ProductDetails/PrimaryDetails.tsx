@@ -1,13 +1,23 @@
+import { Skeleton } from "@mui/material";
 import { colors } from "../../utils/colors";
-import useProductDetails from "./services/useProductDetails";
+import { ProductDetails } from "./utils/productDetailsInterface";
 
-const PrimaryDetails = ({ productId }: { productId: string }) => {
-  const { productDetails, isLoading } = useProductDetails({ productId });
-
+const PrimaryDetails = ({
+  productDetails,
+  isLoading,
+}: {
+  productDetails: ProductDetails ;
+  isLoading: boolean;
+}) => {
   return (
     <div className="w-full h-full">
       {isLoading ? (
-        <div>Loading</div>
+        <div className="flex flex-col gap-4 items-center pt-8">
+          <Skeleton variant="circular" width={100} height={100} />
+          <Skeleton variant="rectangular" width="80%" height={40} />
+          <Skeleton variant="rectangular" width="80%" height={40} />
+          <Skeleton variant="rectangular" width="80%" height={40} />
+        </div>
       ) : (
         <div className="flex flex-col gap-4 items-center pt-8">
           <img

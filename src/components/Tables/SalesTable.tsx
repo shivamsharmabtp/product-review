@@ -2,8 +2,26 @@ import { useEffect, useState } from "react";
 import { SalesData } from "../ProductDetails/utils/productDetailsInterface";
 import { ChevronDown } from "lucide-react";
 
-function formatHeader(str: string) {
+function getFormattedHeader(str: string) {
   return str.replace(/([A-Z])/g, " $1").toUpperCase();
+}
+
+function getFormattedCell(header: string, value: string | number) {
+  if (header === "weekEnding") {
+    value += "T00:00:00";
+    const [month, day, year] = new Date(value)
+      .toLocaleDateString("en-US", {
+        month: "2-digit",
+        day: "2-digit",
+        year: "numeric",
+      })
+      .split("/");
+    return `${month}-${day}-${year}`;
+  }
+  if (header === "retailSales" || header === "wholesaleSales" || header === "retailerMargin") {
+    return `$ ${value.toLocaleString()}`;
+  }
+  return value;
 }
 
 const SalesTable = ({ salesData }: { salesData: SalesData[] }) => {
@@ -53,7 +71,7 @@ const SalesTable = ({ salesData }: { salesData: SalesData[] }) => {
                 }}
               >
                 <span className="flex items-center gap-2">
-                  {formatHeader(header)}
+                  {getFormattedHeader(header)}
                   <ChevronDown
                     className={`w-4 h-4 transition-transform duration-300 ${
                       sortBy === header && sortDirection === "asc"
@@ -74,7 +92,7 @@ const SalesTable = ({ salesData }: { salesData: SalesData[] }) => {
                   key={index}
                   className="text-left text-gray-400 py-2 border-t border-gray-100"
                 >
-                  {sale[header as keyof SalesData]}
+                  {getFormattedCell(header, sale[header as keyof SalesData])}
                 </td>
               ))}
             </tr>

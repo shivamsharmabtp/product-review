@@ -7,7 +7,7 @@ const Header = () => {
       className={clsx("w-full h-[70px] flex items-center")}
       style={{ backgroundColor: colors.blue_01 }}
     >
-      <img src="/stackline_logo_white.png" alt="stackline_logo" className="ml-4" />
+      <img src="/product-review/stackline_logo_white.png" alt="stackline_logo" className="ml-4" />
     </div>
   );
 };
